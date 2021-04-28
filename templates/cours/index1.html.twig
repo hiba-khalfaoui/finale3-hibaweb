@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% block nav %}
+	<!-- Start header -->
+	<header class="top-navbar">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="index.html">
+					<img src="images/logo.png" alt="" />
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbars-host">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Cours </a>
+							<div class="dropdown-menu" aria-labelledby="dropdown-a">
+
+								{% for form in forms %}
+								<a class="dropdown-item" href="{{ path('front_cours',{'id' : form.id}) }}">{{ form.titre }}</a>
+							{% endfor %}
+
+							</div>
+
+						</li>
+						<li class="nav-item active"><a class="nav-link" href="{{ path('liste_favoris_front') }}">Favoris</a></li>
+
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- End header -->
+{% endblock %}
+{% block body %}
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+	<h1>Liste des cours</h1>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Titre</th>
+						<th>Fichier</th>
+						<th>Formation</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for cour in cours %}
+						<tr>
+							<td>{{ cour.titre }}</td>
+							<td>{{ cour.fichier }}</td>
+							<td>
+						{% for form in forms %}
+							{% if cour.formationId == form.id %}
+								{{form.titre}}
+							{% endif %}
+						{% endfor %}
+					</td>
+							<td>	{% if cour.favoris == false %}
+								<a href="{{ path('favoris_add_front', {'id': cour.id}) }}" class="btn btn-primary">
+									<i class="fa fa-bookmark" aria-hidden="true"></i>
+								</a>
+							{% else %}
+								<a href="{{ path('favoris_remove_front', {'id': cour.id}) }}" class="btn btn-warning">
+									<i class="fa fa-bookmark" aria-hidden="true"></i>
+								</a>
+							{% endif %}</td>
+							
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+{% endblock %}

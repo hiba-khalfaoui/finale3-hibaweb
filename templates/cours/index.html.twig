@@ -1,0 +1,63 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Cours index
+{% endblock %}
+{% block nav %}
+	<a class="dropdown-item" href="{{ path('front_cours',{'id' : 4}) }}">PHP</a>
+{% endblock %}
+{% block body %}
+	<h1>Liste des cours</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Titre</th>
+				<th>Fichier</th>
+				<th>Formation</th>
+
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for cour in cours %}
+				<tr>
+					<td>{{ cour.id }}</td>
+					<td>{{ cour.titre }}</td>
+					<td>{{ cour.fichier }}</td>
+					<td>
+						{% for form in forms %}
+							{% if cour.formationId == form.id %}
+								{{form.titre}}
+							{% endif %}
+						{% endfor %}
+					</td>
+
+					<td>
+						<a href="{{ path('cours_edit', {'id': cour.id}) }}" class="btn btn-success">
+							<i class="fas fa-edit"></i>
+						</a>
+						<a href="{{ path('cours_delete', {'id': cour.id}) }}" class="btn btn-danger">
+							<i class="fas fa-trash-alt"></i>
+						</a>
+						{% if cour.favoris == false %}
+						<a href="{{ path('favoris_add', {'id': cour.id}) }}" class="btn btn-primary">
+							<i class="fa fa-bookmark" aria-hidden="true"></i>
+						</a>
+						{% else %}
+							<a href="{{ path('favoris_remove', {'id': cour.id}) }}" class="btn btn-warning">
+							<i class="fa fa-bookmark" aria-hidden="true"></i>
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('cours_new') }}">Create new</a>
+{% endblock %}

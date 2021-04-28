@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    <div class="card-body">
+        <div class="form-group">
+				<label for="exampleInputEmail1">Description</label>
+				{{form_widget(form.description, {'attr' : {'class' : 'form-control' }})}}
+			</div>
+    </div>
+    <button class="btn btn-primary" onclick="f()">{{ button_label|default('Envoyer') }}</button>
+{{ form_end(form) }}
+
+<script>
+
+</script>

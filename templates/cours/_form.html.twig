@@ -1,0 +1,53 @@
+{{ form_start(form) }}
+
+<div class="card card-primary">
+	<div class="card-header">
+		<h3 class="card-title">Créer Cour</h3>
+	</div>
+	<!-- /.card-header -->
+	<!-- form start -->
+
+	<div class="card-body">
+		<div class="form-group">
+			<label for="exampleInputEmail1">Titre</label>
+			{{form_widget(form.titre, {'attr' : {'class' : 'form-control' }})}}
+		</div>
+		<div class="form-group">
+			<label for="exampleInputPassword1">Formation</label>
+			<select name="formation" id="formation" class="form-control">
+					{% for formation in formations %}
+						<option value="{{ formation.id }}">{{formation.titre}}</option>					
+					{% endfor %}
+				</select>
+		</div>
+
+		<div class="form-group">
+			<label for="">Catégorie</label>
+			<select class="form-control" name="categorie">
+				{% for categorie in categories %}
+					<option>{{categorie.description}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputFile">Fichier</label>
+			<div class="input-group">
+
+				{{form_widget(form.fichier, {'attr' : {'class' : 'form-control' }})}}
+
+
+			</div>
+		</div>
+
+	</div>
+	<!-- /.card-body -->
+
+	<div class="card-footer">
+		<button type="submit" class="btn btn-primary" >Envoyer</button>
+	</div>
+
+</div>
+{{ form_end(form) }}
+
+
+

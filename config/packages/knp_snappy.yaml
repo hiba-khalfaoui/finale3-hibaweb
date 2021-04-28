@@ -1,0 +1,11 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:    
+            enable-local-file-access: true
+    image:
+        enabled:    true
+        binary:     "\"C:\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        options:    
+            enable-local-file-access: true
