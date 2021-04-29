@@ -7,6 +7,8 @@ use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Entity\Categorie;
 use App\Entity\Formation;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,7 +93,7 @@ class CoursController extends AbstractController
     /**
      * @Route("/liste_favoris_front", name="liste_favoris_front", methods={"GET"})
      */
-    public function listeFavorisFront(Request $request): Response
+    public function listeFavorisFront(EntityManagerInterface $em,Request $request,PaginatorInterface $paginator): Response
     {
         $cours = $this->getDoctrine()
         ->getRepository(Cours::class)
@@ -101,10 +103,16 @@ class CoursController extends AbstractController
         ->getRepository(Formation::class)
         ->findAll();
         
+        $cour1 = $paginator->paginate(
+            $cours, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
 
         return $this->render("cours/favoris_front.html.twig",[
-            'cours' => $cours,
-            'forms' => $formation
+            'cours' => $cour1,
+            'forms' => $formation,
+            
         ]);
     }
     /**
